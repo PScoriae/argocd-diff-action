@@ -1698,7 +1698,7 @@ const ARGOCD_SERVER_URL = core.getInput('argocd-server-url');
 const ARGOCD_TOKEN = core.getInput('argocd-token');
 const VERSION = core.getInput('argocd-version');
 const ENV = core.getInput('environment');
-const PLAINTEXT = core.getInput('plaintext').toLowerCase() === "true";
+const PLAINTEXT = core.getInput('plaintext').toLowerCase() === 'true';
 let EXTRA_CLI_ARGS = core.getInput('argocd-extra-cli-args');
 if (PLAINTEXT) {
     EXTRA_CLI_ARGS += ' --plaintext';
@@ -1764,7 +1764,10 @@ function getApps() {
         }
         return responseJson.items.filter(app => {
             const targetRevision = app.spec.source.targetRevision;
-            const targetPrimary = targetRevision === 'master' || targetRevision === 'main' || !targetRevision;
+            const targetPrimary = targetRevision === 'master' ||
+                targetRevision === 'main' ||
+                targetRevision === 'HEAD' ||
+                !targetRevision;
             return (app.spec.source.repoURL.includes(`${github.context.repo.owner}/${github.context.repo.repo}`) && targetPrimary);
         });
     });
@@ -1835,7 +1838,7 @@ _Updated at ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angele
                 octokit.rest.issues.deleteComment({
                     owner,
                     repo,
-                    comment_id: comment.id,
+                    comment_id: comment.id
                 });
             }
         }
