@@ -196,26 +196,12 @@ _Updated at ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angele
 | 🛑     | There was an error generating the ArgoCD diffs due to changes in this PR. |
 `);
 
-  core.info("i'm here 2");
-  core.info(owner);
-  core.info(repo);
-  console.log(github.context.issue.number);
-  console.log(typeof github.context.issue.number);
-  const { data: user } = await octokit.rest.users.getAuthenticated();
-  console.log(`Authenticated as: ${user.login}`);
+  const commentsResponse = await octokit.rest.issues.listComments({
+    issue_number: Number(github.context.issue.number),
+    owner,
+    repo
+  });
 
-  let commentsResponse: any;
-  try {
-    commentsResponse = await octokit.rest.issues.listComments({
-      issue_number: 1358,
-      owner: 'MoneyLion',
-      repo: 'bootstrap-kubernetes-ai-cluster'
-    });
-  } catch (e) {
-    console.log(e);
-  }
-
-  core.info("i'm here 3");
   // Delete stale comments
   for (const comment of commentsResponse!.data) {
     if (comment.body?.includes(prefixHeader)) {
@@ -228,7 +214,6 @@ _Updated at ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angele
     }
   }
 
-  core.info("i'm here 4");
   // Only post a new comment when there are changes
   if (diffs.length) {
     octokit.rest.issues.createComment({
@@ -238,7 +223,6 @@ _Updated at ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angele
       body: output
     });
   }
-  core.info("i'm here 5");
 }
 
 async function asyncForEach<T>(
@@ -251,6 +235,8 @@ async function asyncForEach<T>(
 }
 
 async function run(): Promise<void> {
+  const { data: user } = await octokit.rest.users.getAuthenticated();
+  core.info(`Authenticated as: ${user.login}`);
   const argocd = await setupArgoCDCommand();
   const apps = await getApps();
   core.info(`Found apps: ${apps.map(a => a.metadata.name).join(', ')}`);
