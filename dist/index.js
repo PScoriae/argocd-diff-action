@@ -1873,6 +1873,9 @@ function run() {
         core.info(`Found apps: ${apps.map(a => a.metadata.name).join(', ')}`);
         const diffs = [];
         yield asyncForEach(apps, (app) => __awaiter(this, void 0, void 0, function* () {
+            var _a;
+            if (!((_a = app.spec.source) === null || _a === void 0 ? void 0 : _a.path))
+                return;
             const command = `app diff ${app.metadata.name} --local=${app.spec.source.path}`;
             try {
                 core.info(`Running: argocd ${command}`);

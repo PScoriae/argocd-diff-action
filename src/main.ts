@@ -243,6 +243,7 @@ async function run(): Promise<void> {
   const diffs: Diff[] = [];
 
   await asyncForEach(apps, async app => {
+    if (!app.spec.source?.path) return;
     const command = `app diff ${app.metadata.name} --local=${app.spec.source!.path}`;
     try {
       core.info(`Running: argocd ${command}`);
