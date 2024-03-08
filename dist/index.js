@@ -1763,15 +1763,18 @@ function getApps() {
             core.error(e);
         }
         return responseJson.items.filter(app => {
-            var _a;
-            console.log(app);
-            const targetRevision = ((_a = app.spec.source) === null || _a === void 0 ? void 0 : _a.targetRevision) ? app.spec.source.targetRevision
-                : 'HEAD';
+            let source;
+            if (app.spec.source)
+                source = app.spec.source;
+            else
+                source = app.spec.sources[0];
+            const targetRevision = source.targetRevision ? source.targetRevision : 'HEAD';
             const targetPrimary = targetRevision === 'master' ||
                 targetRevision === 'main' ||
                 targetRevision === 'HEAD' ||
                 !targetRevision;
-            return (app.spec.source.repoURL.includes(`${github.context.repo.owner}/${github.context.repo.repo}`) && targetPrimary);
+            return (source.repoURL.includes(`${github.context.repo.owner}/${github.context.repo.repo}`) &&
+                targetPrimary);
         });
     });
 }
