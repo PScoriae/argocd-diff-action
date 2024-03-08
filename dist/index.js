@@ -1878,7 +1878,7 @@ function run() {
             var _a;
             if (!((_a = app.spec.source) === null || _a === void 0 ? void 0 : _a.path))
                 return;
-            const command = `app diff ${app.metadata.name} --local=${app.spec.source.path}`;
+            const command = `app diff ${app.metadata.name} --local=${app.spec.source.path} --server-side-generate`;
             try {
                 core.info(`Running: argocd ${command}`);
                 // ArgoCD app diff will exit 1 if there is a diff, so always catch,
