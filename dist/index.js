@@ -1758,13 +1758,13 @@ function getApps() {
                 headers: { Cookie: `argocd.token=${ARGOCD_TOKEN}` }
             });
             responseJson = yield response.json();
-            console.log(responseJson.items[0].spec);
         }
         catch (e) {
             core.error(e);
         }
         return responseJson.items.filter(app => {
             var _a;
+            console.log(app);
             const targetRevision = ((_a = app.spec.source) === null || _a === void 0 ? void 0 : _a.targetRevision) ? app.spec.source.targetRevision
                 : 'HEAD';
             const targetPrimary = targetRevision === 'master' ||

@@ -103,12 +103,12 @@ async function getApps(): Promise<App[]> {
       headers: { Cookie: `argocd.token=${ARGOCD_TOKEN}` }
     });
     responseJson = await response.json();
-    console.log(responseJson.items[0].spec);
   } catch (e) {
     core.error(e);
   }
 
   return (responseJson.items as App[]).filter(app => {
+    console.log(app);
     const targetRevision = app.spec.source?.targetRevision
       ? app.spec.source.targetRevision
       : 'HEAD';
