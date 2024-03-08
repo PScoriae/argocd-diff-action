@@ -1833,11 +1833,13 @@ _Updated at ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angele
 | ⚠️      | The app is out-of-sync in ArgoCD, and the diffs you see include those changes plus any from this PR. |
 | 🛑     | There was an error generating the ArgoCD diffs due to changes in this PR. |
 `);
+        core.info("i'm here 2");
         const commentsResponse = yield octokit.rest.issues.listComments({
             issue_number: github.context.issue.number,
             owner,
             repo
         });
+        core.info("i'm here 3");
         // Delete stale comments
         for (const comment of commentsResponse.data) {
             if ((_c = comment.body) === null || _c === void 0 ? void 0 : _c.includes(prefixHeader)) {
@@ -1849,6 +1851,7 @@ _Updated at ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angele
                 });
             }
         }
+        core.info("i'm here 4");
         // Only post a new comment when there are changes
         if (diffs.length) {
             octokit.rest.issues.createComment({
@@ -1858,6 +1861,7 @@ _Updated at ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angele
                 body: output
             });
         }
+        core.info("i'm here 5");
     });
 }
 function asyncForEach(array, callback) {

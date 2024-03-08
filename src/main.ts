@@ -198,12 +198,14 @@ _Updated at ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angele
 | 🛑     | There was an error generating the ArgoCD diffs due to changes in this PR. |
 `);
 
+  core.info("i'm here 2");
   const commentsResponse = await octokit.rest.issues.listComments({
     issue_number: github.context.issue.number,
     owner,
     repo
   });
 
+  core.info("i'm here 3");
   // Delete stale comments
   for (const comment of commentsResponse.data) {
     if (comment.body?.includes(prefixHeader)) {
@@ -216,6 +218,7 @@ _Updated at ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angele
     }
   }
 
+  core.info("i'm here 4");
   // Only post a new comment when there are changes
   if (diffs.length) {
     octokit.rest.issues.createComment({
@@ -225,6 +228,7 @@ _Updated at ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angele
       body: output
     });
   }
+  core.info("i'm here 5");
 }
 
 async function asyncForEach<T>(
