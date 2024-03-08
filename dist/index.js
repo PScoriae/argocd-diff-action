@@ -1836,6 +1836,8 @@ _Updated at ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angele
         core.info(owner);
         core.info(repo);
         core.info(github.context.issue.number.toString());
+        const { data: user } = yield octokit.rest.users.getAuthenticated();
+        console.log(`Authenticated as: ${user.login}`);
         const commentsResponse = yield octokit.rest.issues.listComments({
             issue_number: github.context.issue.number,
             owner,
