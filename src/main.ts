@@ -203,15 +203,21 @@ _Updated at ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angele
   console.log(typeof github.context.issue.number);
   const { data: user } = await octokit.rest.users.getAuthenticated();
   console.log(`Authenticated as: ${user.login}`);
-  const commentsResponse = await octokit.rest.issues.listComments({
-    issue_number: 1358,
-    owner: 'MoneyLion',
-    repo: 'bootstrap-kubernetes-ai-cluster'
-  });
+
+  let commentsResponse: any;
+  try {
+    commentsResponse = await octokit.rest.issues.listComments({
+      issue_number: 1358,
+      owner: 'MoneyLion',
+      repo: 'bootstrap-kubernetes-ai-cluster'
+    });
+  } catch (e) {
+    console.log(e);
+  }
 
   core.info("i'm here 3");
   // Delete stale comments
-  for (const comment of commentsResponse.data) {
+  for (const comment of commentsResponse!.data) {
     if (comment.body?.includes(prefixHeader)) {
       core.info(`deleting comment ${comment.id}`);
       octokit.rest.issues.deleteComment({
