@@ -1764,7 +1764,7 @@ function getApps() {
             core.error(e);
         }
         return responseJson.items.filter(app => {
-            const targetRevision = app.spec.source.targetRevision;
+            const targetRevision = app.spec.source.targetRevision ? app.spec.source.targetRevision : 'HEAD';
             const targetPrimary = targetRevision === 'master' ||
                 targetRevision === 'main' ||
                 targetRevision === 'HEAD' ||
