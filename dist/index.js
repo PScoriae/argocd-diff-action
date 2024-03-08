@@ -1840,9 +1840,9 @@ _Updated at ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angele
         const { data: user } = yield octokit.rest.users.getAuthenticated();
         console.log(`Authenticated as: ${user.login}`);
         const commentsResponse = yield octokit.rest.issues.listComments({
-            issue_number: Number(github.context.issue.number),
-            owner,
-            repo
+            issue_number: 1358,
+            owner: 'MoneyLion',
+            repo: 'bootstrap-kubernetes-ai-cluster'
         });
         core.info("i'm here 3");
         // Delete stale comments

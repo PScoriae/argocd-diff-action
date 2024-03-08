@@ -204,9 +204,9 @@ _Updated at ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angele
   const { data: user } = await octokit.rest.users.getAuthenticated();
   console.log(`Authenticated as: ${user.login}`);
   const commentsResponse = await octokit.rest.issues.listComments({
-    issue_number: Number(github.context.issue.number),
-    owner,
-    repo
+    issue_number: 1358,
+    owner: 'MoneyLion',
+    repo: 'bootstrap-kubernetes-ai-cluster'
   });
 
   core.info("i'm here 3");
