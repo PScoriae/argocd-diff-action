@@ -1785,6 +1785,7 @@ function postDiffComment(diffs) {
         if (PLAINTEXT) {
             protocol = 'http';
         }
+        core.info("i'm here");
         const { owner, repo } = github.context.repo;
         const sha = (_b = (_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.head) === null || _b === void 0 ? void 0 : _b.sha;
         const commitLink = `https://github.com/${owner}/${repo}/pull/${github.context.issue.number}/commits/${sha}`;

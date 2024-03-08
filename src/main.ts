@@ -138,6 +138,7 @@ async function postDiffComment(diffs: Diff[]): Promise<void> {
     protocol = 'http';
   }
 
+  core.info("i'm here");
   const { owner, repo } = github.context.repo;
   const sha = github.context.payload.pull_request?.head?.sha;
 
