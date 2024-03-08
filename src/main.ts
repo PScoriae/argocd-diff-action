@@ -199,11 +199,12 @@ _Updated at ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angele
   core.info("i'm here 2");
   core.info(owner);
   core.info(repo);
-  core.info(github.context.issue.number.toString());
+  console.log(github.context.issue.number);
+  console.log(typeof github.context.issue.number);
   const { data: user } = await octokit.rest.users.getAuthenticated();
   console.log(`Authenticated as: ${user.login}`);
   const commentsResponse = await octokit.rest.issues.listComments({
-    issue_number: github.context.issue.number,
+    issue_number: Number(github.context.issue.number),
     owner,
     repo
   });
