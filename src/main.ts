@@ -140,6 +140,9 @@ async function postDiffComment(diffs: Diff[]): Promise<void> {
 
   core.info("i'm here");
   const { owner, repo } = github.context.repo;
+  core.info(owner);
+  core.info(repo);
+  core.info(github.context.issue.number.toString());
   const sha = github.context.payload.pull_request?.head?.sha;
 
   const commitLink = `https://github.com/${owner}/${repo}/pull/${github.context.issue.number}/commits/${sha}`;
