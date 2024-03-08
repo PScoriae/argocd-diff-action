@@ -1693,7 +1693,6 @@ const path = __importStar(__webpack_require__(622));
 const node_fetch_1 = __importDefault(__webpack_require__(454));
 const ARCH = process.env.ARCH || 'linux';
 const githubToken = core.getInput('github-token');
-core.info(githubToken);
 const ARGOCD_SERVER_URL = core.getInput('argocd-server-url');
 const ARGOCD_TOKEN = core.getInput('argocd-token');
 const VERSION = core.getInput('argocd-version');
@@ -1787,9 +1786,6 @@ function postDiffComment(diffs) {
         }
         core.info("i'm here");
         const { owner, repo } = github.context.repo;
-        core.info(owner);
-        core.info(repo);
-        core.info(github.context.issue.number.toString());
         const sha = (_b = (_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.head) === null || _b === void 0 ? void 0 : _b.sha;
         const commitLink = `https://github.com/${owner}/${repo}/pull/${github.context.issue.number}/commits/${sha}`;
         const shortCommitSha = String(sha).substr(0, 7);
@@ -1837,6 +1833,9 @@ _Updated at ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angele
 | 🛑     | There was an error generating the ArgoCD diffs due to changes in this PR. |
 `);
         core.info("i'm here 2");
+        core.info(owner);
+        core.info(repo);
+        core.info(github.context.issue.number.toString());
         const commentsResponse = yield octokit.rest.issues.listComments({
             issue_number: github.context.issue.number,
             owner,

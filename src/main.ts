@@ -34,8 +34,6 @@ interface App {
 }
 const ARCH = process.env.ARCH || 'linux';
 const githubToken = core.getInput('github-token');
-core.info(githubToken);
-
 const ARGOCD_SERVER_URL = core.getInput('argocd-server-url');
 const ARGOCD_TOKEN = core.getInput('argocd-token');
 const VERSION = core.getInput('argocd-version');
@@ -140,9 +138,6 @@ async function postDiffComment(diffs: Diff[]): Promise<void> {
 
   core.info("i'm here");
   const { owner, repo } = github.context.repo;
-  core.info(owner);
-  core.info(repo);
-  core.info(github.context.issue.number.toString());
   const sha = github.context.payload.pull_request?.head?.sha;
 
   const commitLink = `https://github.com/${owner}/${repo}/pull/${github.context.issue.number}/commits/${sha}`;
@@ -202,6 +197,9 @@ _Updated at ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angele
 `);
 
   core.info("i'm here 2");
+  core.info(owner);
+  core.info(repo);
+  core.info(github.context.issue.number.toString());
   const commentsResponse = await octokit.rest.issues.listComments({
     issue_number: github.context.issue.number,
     owner,
