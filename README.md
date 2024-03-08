@@ -46,3 +46,7 @@ jobs:
 Build the script and commit to your branch:
 `npm run build && npm run pack`
 Commit the build output, and make a PR.
+
+Note: You may need to run the following command before building the script:
+`export NODE_OPTIONS=--openssl-legacy-provider`
+[Source](https://stackoverflow.com/a/69746937)
